@@ -40,12 +40,10 @@ void Game::GameLoop()
     std::cout << "\nStarting Blackjack game...\n";
     std::this_thread::sleep_for(std::chrono::seconds(2)); 
 
-
     std::cout << "\nPlayer's starting hand:\n";
     DrawCardPlayer(PlayerScore);
     DrawCardPlayer(PlayerScore);
     ShowPlayerScore();
-
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << "\nDealer's starting hand:\n";
@@ -53,15 +51,19 @@ void Game::GameLoop()
     DrawCardDealer(DealerScore);
     ShowDealerScore();
 
-    while (PlayerScore < 21) // player's loop
+    while (PlayerScore < 21) 
     {
-        std::cout << "To draw a card type 'd'\nTo stay type 's'\n";
+        std::cout << "To draw a card, type 'd'. To stay, type 's': ";
         char input;
         std::cin >> input;
         if (input == 'd' || input == 'D')
         {
             DrawCardPlayer(PlayerScore);
             ShowPlayerScore();
+            if (PlayerScore > 21) {
+                std::cout << "Player busts! You've lost.\n";
+                return;
+            }
         }
         else if (input == 's' || input == 'S')
         {
@@ -69,39 +71,42 @@ void Game::GameLoop()
         }
         else
         {
-            continue;
+            std::cout << "Invalid input. Please type 'd' or 's'.\n";
         }
     }
 
-    if (PlayerScore > 21)
-    {
-        ShowPlayerScore();
-        std::cout << "You've lost." << std::endl;
-        return;
-    }
-
+    std::cout << "\nDealer's turn...\n";
     while (DealerScore < PlayerScore)
     {
-        if (DealerScore > 21)
-        {
-            break;
-        }
         DrawCardDealer(DealerScore);
         ShowDealerScore();
     }
+
+    ShowFinalResults();
+}
+
+void Game::ShowFinalResults()
+{
     ShowPlayerScore();
     ShowDealerScore();
-    if (DealerScore > PlayerScore && DealerScore <= 21)
+    if (DealerScore > 21)
     {
-        std::cout << "Dealer won.";
+        std::cout << "Dealer busts! Player wins.\n";
     }
-    else if (DealerScore < PlayerScore)
+    else if (PlayerScore > DealerScore)
     {
-        std::cout << "Player won.";
+        std::cout << "Player wins!\n";
+    }
+    else if (DealerScore > PlayerScore)
+    {
+        std::cout << "Dealer wins.\n";
     }
     else
     {
-        std::cout << "Tie.";
+        std::cout << "It's a tie!\n";
     }
-    getch();
+
+    std::cout << "\nEnter any key to exit: ";
+    char c;
+    std::cin >> c;
 }

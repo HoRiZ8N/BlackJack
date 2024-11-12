@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include <conio.h>
 
 class Game
 {
@@ -18,6 +17,7 @@ public:
     void ShowPlayerScore();
     void ShowDealerScore();
     void GameLoop();
+    void ShowFinalResults();
 };
 
 

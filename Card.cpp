@@ -1,16 +1,25 @@
 #include "Card.h"
+#include <cstdlib>
+#include <ctime>
 
-std::string Card::GetName() { return name; }
+std::string Card::GetName() const { return name; }
 
-std::string Card::GetSuit() { return suit; }
+std::string Card::GetSuit() const { return suit; }
 
-int Card::GetValue() { return value;}
+int Card::GetValue() const { return value; }
+
+Card::Card(){}
 
 void Card::SetRandom()
 {
-    srand(time(0));
+    static bool seedSet = false;
+    if (!seedSet) {
+        srand(static_cast<unsigned int>(time(0)));
+        seedSet = true;
+    }
+    
     int randomVal = rand() % 13 + 1;
-    value = (randomVal <= 10) ? randomVal : 10;  
+    value = (randomVal <= 10) ? randomVal : 10;
 
     switch (randomVal) {
         case 1: name = "Ace"; break;

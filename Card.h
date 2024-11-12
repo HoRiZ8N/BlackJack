@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
 
 class Card
 {
@@ -11,11 +11,9 @@ private:
     std::string suit;
 
 public:
-    Card() {} 
+    Card();
     void SetRandom();
-    std::string GetName();
-    std::string GetSuit();
-    int GetValue();
+    std::string GetName() const;
+    std::string GetSuit() const;
+    int GetValue() const;
 };
-
-
