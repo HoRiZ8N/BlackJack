@@ -103,4 +103,5 @@ void Game::GameLoop()
     {
         std::cout << "Tie.";
     }
+    getch();
 }
